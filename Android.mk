@@ -1,3 +1,4 @@
+ifeq ($(TARGET_HW_KEYMASTER_V03),true)
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(call is-vendor-board-platform,QCOM),true)
@@ -39,3 +40,14 @@ LOCAL_MODULE_TAGS := optional
 include $(BUILD_SHARED_LIBRARY)
 
 endif # TARGET_BOARD_PLATFORM
+else
+LOCAL_MODULE := keystore.qcom
+$(info Removing keymaster v0.3 bins)
+$(shell rm -rf $(TARGET_OUT_INTERMEDIATES)/SHARED_LIBRARIES/$(LOCAL_MODULE)_intermediates )
+$(shell rm -rf $(TARGET_OUT)/lib/hw/$(LOCAL_MODULE).so )
+$(shell rm -rf $(TARGET_OUT)/lib64/hw/$(LOCAL_MODULE).so )
+$(shell rm -rf $(TARGET_OUT)/../symbols/system/lib/hw/$(LOCAL_MODULE).so )
+$(shell rm -rf $(TARGET_OUT_INTERMEDIATES)/lib/$(LOCAL_MODULE).so )
+$(shell rm -fr $(TARGET_OUT_INTERMEDIATES)/lib64/$(LOCAL_MODULE).so )
+
+endif # end of TARGET_HW_KEYMASTER_V03
